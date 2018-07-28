@@ -4,7 +4,7 @@ import scrapy
 from bs4 import BeautifulSoup
 
 
-class QuotesSpider(scrapy.Spider):
+class MeasuresSpider(scrapy.Spider):
     name = "calaccess"
 
     def start_requests(self):
