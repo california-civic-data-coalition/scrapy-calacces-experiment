@@ -2,6 +2,7 @@ import os
 import re
 import scrapy
 from bs4 import BeautifulSoup
+from six.moves.urllib.parse import urljoin
 
 
 class MeasuresSpider(scrapy.Spider):
@@ -28,10 +29,11 @@ class MeasuresSpider(scrapy.Spider):
         url_list = list(set([link['href'] for link in links]))
 
         for url in url_list:
+            url = urljoin("http://cal-access.sos.ca.gov", url)
             yield scrapy.Request(url=url, callback=self.save_html)
 
     def save_html(self, response):
-        year = response.url.split("session")[-1]
+        year = response.url.split("session=")[-1]
         filename = os.path.join(
             self.settings.get("BASE_DIR"),
             'html',

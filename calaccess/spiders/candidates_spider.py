@@ -23,13 +23,14 @@ class MeasuresSpider(scrapy.Spider):
             f.write(response.body)
 
         soup = BeautifulSoup(response.body, "html.parser")
-        links = soup.findAll('a', href=re.compile(r'^.*\?electNav=\d+'))
+        links = soup.findAll('a', href=True)
+        links = [l for l in links if 'electNav' in l['href']]
         links = [
             l for l in links
             if l.find_next_sibling('span').text != 'Prior Elections'
         ]
 
-        self.logger.debug("{} measure URLs discovered in seed".format(len(links)))
+        self.logger.debug("{} candidate URLs discovered in seed".format(len(links)))
         url_list = list(set([link['href'] for link in links]))
 
         for url in url_list:
@@ -37,7 +38,7 @@ class MeasuresSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.save_html)
 
     def save_html(self, response):
-        year = response.url.split("session")[-1]
+        year = response.url.split("electNav=")[-1]
         filename = os.path.join(
             self.settings.get("BASE_DIR"),
             'html',
