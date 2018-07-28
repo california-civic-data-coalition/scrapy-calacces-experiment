@@ -2,13 +2,14 @@ import os
 import re
 import scrapy
 from bs4 import BeautifulSoup
+from six.moves.urllib.parse import urljoin
 
 
 class MeasuresSpider(scrapy.Spider):
-    name = "calaccess"
+    name = "candidates"
 
     def start_requests(self):
-        seed_url = "http://cal-access.sos.ca.gov/Campaign/Measures/list.aspx?session=2015"
+        seed_url = "http://cal-access.sos.ca.gov/Campaign/Candidates/list.aspx?view=certified&electNav=93"
         yield scrapy.Request(url=seed_url, callback=self.parse_seed)
 
     def parse_seed(self, response):
@@ -16,18 +17,23 @@ class MeasuresSpider(scrapy.Spider):
         filename = os.path.join(
             self.settings.get("BASE_DIR"),
             'html',
-            'measures-seed.html'
+            'candidates-seed.html'
         )
         with open(filename, 'w') as f:
             f.write(response.body)
 
         soup = BeautifulSoup(response.body, "html.parser")
-        links = soup.findAll('a', href=re.compile(r'^.*\?session=\d+'))
+        links = soup.findAll('a', href=re.compile(r'^.*\?electNav=\d+'))
+        links = [
+            l for l in links
+            if l.find_next_sibling('span').text != 'Prior Elections'
+        ]
 
         self.logger.debug("{} measure URLs discovered in seed".format(len(links)))
         url_list = list(set([link['href'] for link in links]))
 
         for url in url_list:
+            url = urljoin("http://cal-access.sos.ca.gov", url)
             yield scrapy.Request(url=url, callback=self.save_html)
 
     def save_html(self, response):
@@ -35,7 +41,7 @@ class MeasuresSpider(scrapy.Spider):
         filename = os.path.join(
             self.settings.get("BASE_DIR"),
             'html',
-            'measures-{}.html'.format(year)
+            'candidates-{}.html'.format(year)
         )
         with open(filename, 'wb') as f:
             f.write(response.body)
