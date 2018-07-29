@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-
-# Define here the models for your spider middleware
-#
-# See documentation in:
-# https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 import requests
 from scrapy import signals
 from bs4 import BeautifulSoup
@@ -38,6 +33,12 @@ def get_proxies():
     return proxies
 
 
+def update_proxies():
+    proxy_list = get_proxies()
+    with open(crawler.settings.get("ROTATING_PROXY_LIST_PATH"), 'w') as f:
+        [f.write(p + "\n") for p in proxy_list]
+
+
 class CalaccessSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
@@ -45,10 +46,6 @@ class CalaccessSpiderMiddleware(object):
 
     @classmethod
     def from_crawler(cls, crawler):
-        proxy_list = get_proxies()
-        with open(crawler.settings.get("ROTATING_PROXY_LIST_PATH"), 'w') as f:
-            [f.write(p + "\n") for p in proxy_list]
-
         # This method is used by Scrapy to create your spiders.
         s = cls()
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)

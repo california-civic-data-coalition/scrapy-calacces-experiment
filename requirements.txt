@@ -32,3 +32,4 @@ typing==3.6.4
 urllib3==1.23
 w3lib==1.19.0
 zope.interface==4.5.0
+bs4
