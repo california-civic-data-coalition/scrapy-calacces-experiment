@@ -1,6 +1,5 @@
 import os
 import scrapy
-from bs4 import BeautifulSoup
 from six.moves.urllib.parse import urljoin
 
 
@@ -29,7 +28,7 @@ class BaseSpider(scrapy.Spider):
         links = response.xpath('*//a/@href').extract()
 
         # Trim HTML tags down to just the hrefs
-        links = [l['href'] for l in links if self.link_match in l['href']]
+        links = [l for l in links if self.link_match in l]
 
         # Convert them into full URLs
         links = [urljoin("http://cal-access.sos.ca.gov", l) for l in links]
