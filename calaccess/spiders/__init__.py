@@ -25,10 +25,8 @@ class BaseSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.handle_response)
 
     def parse_links(self, response):
-        soup = BeautifulSoup(response.body, "html.parser")
-
         # Parse out all hyperlinks with hrefs
-        links = soup.findAll('a', href=True)
+        links = response.xpath('*//a/@href').extract()
 
         # Trim HTML tags down to just the hrefs
         links = [l['href'] for l in links if self.link_match in l['href']]
