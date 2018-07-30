@@ -8,5 +8,9 @@ class CandidateElectionLoader(ItemLoader):
     default_item_class = items.CandidateElectionItem
 
 
-class MeasureElectionLoader(ItemLoader):
-    default_item_class = items.MeasureElectionItem
+class IncumbentElectionLoader(ItemLoader):
+    default_item_class = items.IncumbentElectionItem
+
+
+class PropositionElectionLoader(ItemLoader):
+    default_item_class = items.PropositionElectionItem

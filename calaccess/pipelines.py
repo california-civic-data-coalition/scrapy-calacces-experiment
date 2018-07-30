@@ -7,7 +7,8 @@ from scrapy.xlib.pydispatch import dispatcher
 
 class MultiCSVItemPipeline(object):
     item_list = [
-        'measureelection',
+        'propositionselection',
+        'incumbentelection',
         'candidateelection',
     ]
 

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from . import BaseSpider
-from calaccess.loaders import MeasureElectionLoader
+from calaccess.loaders import PropositionElectionLoader
 
 
-class MeasuresSpider(BaseSpider):
-    name = "measures"
+class PropositionsSpider(BaseSpider):
+    name = "propositions"
     start_urls = ["http://cal-access.sos.ca.gov/Campaign/Measures/list.aspx?session=2015",]
     link_match = '?session='
     name_split = "session="
@@ -19,7 +19,7 @@ class MeasuresSpider(BaseSpider):
         self.logger.debug("{} elections found".format(len(table_list)))
 
         for table in table_list:
-            item = MeasureElectionLoader(response=response)
+            item = PropositionElectionLoader(response=response)
             selector = Selector(text=table)
             name = selector.xpath('//caption/span/text()').extract_first()
             item.add_value('name', name)

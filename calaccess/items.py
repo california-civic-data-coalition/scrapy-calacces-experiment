@@ -8,6 +8,12 @@ class CandidateElectionItem(scrapy.Item):
     url = scrapy.Field()
 
 
-class MeasureElectionItem(scrapy.Item):
+class IncumbentElectionItem(scrapy.Item):
+    session = scrapy.Field()
+    date = scrapy.Field()
+    url = scrapy.Field()
+
+
+class PropositionsElectionItem(scrapy.Item):
     name = scrapy.Field()
     url = scrapy.Field()
