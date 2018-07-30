@@ -13,9 +13,6 @@ class CandidatesSpider(BaseSpider):
     name_split = "electNav="
 
     def parse(self, response):
-        # Write response
-        self.write_response(response)
-
         # Parse this page's election id
         id = response.url.split(self.name_split)[-1]
         self.logger.debug("Parsing election {}".format(id))

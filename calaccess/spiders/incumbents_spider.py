@@ -16,9 +16,6 @@ class IncumbentsSpider(BaseSpider):
     )
 
     def parse(self, response):
-        # Write response
-        self.write_response(response)
-
         # Parse all the items in the page
         soup = BeautifulSoup(response.body, 'lxml')s
         cycle_links = [
