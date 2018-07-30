@@ -1,7 +1,5 @@
-import os
 import scrapy
 from six.moves.urllib.parse import urljoin
-from scrapy.selector import Selector
 
 
 class BaseSpider(scrapy.Spider):
@@ -23,18 +21,3 @@ class BaseSpider(scrapy.Spider):
 
         # Return it.
         return links
-
-    def write_response(self, response):
-        page_name = response.url.split(self.name_split)[-1]
-        file_name = '{}-{}.html'.format(self.name, page_name)
-        self.write_html(file_name, response)
-
-    def write_html(self, file_name, response):
-        self.log('Saving file %s' % file_name)
-
-        # Create the file path
-        file_path = os.path.join(self.settings.get("BASE_DIR"), 'html', file_name)
-
-        # Write it out
-        with open(file_path, 'w') as f:
-            f.write(response.body)

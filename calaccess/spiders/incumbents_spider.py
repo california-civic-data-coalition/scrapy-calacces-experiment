@@ -10,9 +10,6 @@ class IncumbentsSpider(BaseSpider):
     name_split = "session="
 
     def parse(self, response):
-        # Write response
-        self.write_response(response)
-
         # Parse all the items in the page
         pass
 

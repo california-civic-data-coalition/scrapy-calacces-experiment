@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from . import BaseSpider
+from scrapy.selector import Selector
 from calaccess.loaders import MeasureElectionLoader
 
 
@@ -11,9 +12,6 @@ class MeasuresSpider(BaseSpider):
     name_split = "session="
 
     def parse(self, response):
-        # Write response
-        self.write_response(response)
-
         # Parse all the items in the page
         table_list = response.selector.xpath('*//table[contains(@id, "ListElections1__")]').extract()
         self.logger.debug("{} elections found".format(len(table_list)))
