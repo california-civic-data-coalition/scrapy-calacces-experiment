@@ -10,6 +10,7 @@ class CandidateElectionItem(scrapy.Item):
 
 class IncumbentElectionItem(scrapy.Item):
     session = scrapy.Field()
+    name = scrapy.Field()
     date = scrapy.Field()
     url = scrapy.Field()
 
