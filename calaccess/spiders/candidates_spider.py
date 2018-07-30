@@ -10,11 +10,10 @@ class CandidatesSpider(BaseSpider):
     name = "candidates"
     start_urls = ["http://cal-access.sos.ca.gov/Campaign/Candidates/list.aspx?view=certified&electNav=62",]
     link_match = "&electNav="
-    name_split = "electNav="
 
     def parse(self, response):
         # Parse this page's election id
-        id = response.url.split(self.name_split)[-1]
+        id = response.url.split("electNav=")[-1]
         self.logger.debug("Parsing election {}".format(id))
 
         # Find the link on the page with this id

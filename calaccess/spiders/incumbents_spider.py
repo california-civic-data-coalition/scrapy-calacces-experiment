@@ -10,14 +10,13 @@ class IncumbentsSpider(BaseSpider):
     name = "incumbents"
     start_urls = ["http://cal-access.sos.ca.gov/Campaign/Candidates/list.aspx?view=incumbent&session=2015",]
     link_match = '?view=incumbent&session='
-    name_split = "session="
     cycle_link_pattern = re.compile(
         r'^/Campaign/Candidates/list\.aspx\?view=incumbent&session=(?P<yr>\d{,4})',
     )
 
     def parse(self, response):
         # Parse all the items in the page
-        soup = BeautifulSoup(response.body, 'lxml')s
+        soup = BeautifulSoup(response.body, 'lxml')
         cycle_links = [
             l['href'] for l in soup.find_all(
                 'a',

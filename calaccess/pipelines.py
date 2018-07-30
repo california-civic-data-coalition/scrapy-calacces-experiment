@@ -24,7 +24,7 @@ class MultiCSVItemPipeline(object):
                 'csv',
                 '{}.csv'.format(item)
             )
-            self.file_dict[item] = open(file_path, 'wb')
+            self.file_dict[item] = open(file_path, 'w+b')
 
         self.exporters = {}
         for item in self.item_list:

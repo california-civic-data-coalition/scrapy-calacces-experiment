@@ -14,6 +14,6 @@ class IncumbentElectionItem(scrapy.Item):
     url = scrapy.Field()
 
 
-class PropositionsElectionItem(scrapy.Item):
+class PropositionElectionItem(scrapy.Item):
     name = scrapy.Field()
     url = scrapy.Field()

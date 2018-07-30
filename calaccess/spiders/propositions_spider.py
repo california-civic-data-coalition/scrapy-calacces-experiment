@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from . import BaseSpider
+from scrapy.selector import Selector
 from calaccess.loaders import PropositionElectionLoader
 
 
@@ -8,7 +9,6 @@ class PropositionsSpider(BaseSpider):
     name = "propositions"
     start_urls = ["http://cal-access.sos.ca.gov/Campaign/Measures/list.aspx?session=2015",]
     link_match = '?session='
-    name_split = "session="
 
     def parse(self, response):
         # Parse all the items in the page
