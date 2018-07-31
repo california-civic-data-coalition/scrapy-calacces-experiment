@@ -41,9 +41,9 @@ class PropositionsSpider(BaseSpider):
                     }
                 )
 
-        # # Recursively request any new links found on this page
-        # for url in self.parse_links(response):
-        #     yield scrapy.Request(url=url, callback=self.parse)
+        # Recursively request any new links found on this page
+        for url in self.parse_links(response):
+            yield scrapy.Request(url=url, callback=self.parse)
 
     def parse_proposition(self, response):
         soup = BeautifulSoup(response.body, 'lxml')
