@@ -14,3 +14,7 @@ class IncumbentElectionLoader(ItemLoader):
 
 class PropositionElectionLoader(ItemLoader):
     default_item_class = items.PropositionElectionItem
+
+
+class PropositionCommitteeLoader(ItemLoader):
+    default_item_class = items.PropositionCommitteeItem

@@ -18,3 +18,15 @@ class IncumbentElectionItem(scrapy.Item):
 class PropositionElectionItem(scrapy.Item):
     name = scrapy.Field()
     url = scrapy.Field()
+
+
+class PropositionItem(scrapy.Item):
+    name = scrapy.Field()
+    url = scrapy.Field()
+
+
+class PropositionCommitteeItem(scrapy.Item):
+    id = scrapy.Field()
+    name = scrapy.Field()
+    position = scrapy.Field()
+    url = scrapy.Field()

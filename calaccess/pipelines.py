@@ -9,6 +9,7 @@ from scrapy.xlib.pydispatch import dispatcher
 class PipelineMixin(object):
     item_list = [
         'propositionelection',
+        'propositioncommittee',
         'incumbentelection',
         'candidateelection',
     ]
