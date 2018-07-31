@@ -2,6 +2,14 @@
 import scrapy
 
 
+class CandidateItem(scrapy.Item):
+    id = scrapy.Field()
+    name = scrapy.Field()
+    office = scrapy.Field()
+    url = scrapy.Field()
+    election_id = scrapy.Field()
+
+
 class CandidateElectionItem(scrapy.Item):
     id = scrapy.Field()
     name = scrapy.Field()

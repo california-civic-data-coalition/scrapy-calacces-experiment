@@ -8,10 +8,11 @@ from scrapy.xlib.pydispatch import dispatcher
 
 class PipelineMixin(object):
     item_list = [
+        'candidate',
+        'candidateelection',
+        'incumbentelection',
         'propositionelection',
         'propositioncommittee',
-        'incumbentelection',
-        'candidateelection',
     ]
 
     def get_item_class(self, item):

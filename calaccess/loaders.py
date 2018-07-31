@@ -4,6 +4,10 @@ from . import items
 from scrapy.loader import ItemLoader
 
 
+class CandidateLoader(ItemLoader):
+    default_item_class = items.CandidateItem
+
+
 class CandidateElectionLoader(ItemLoader):
     default_item_class = items.CandidateElectionItem
 

@@ -7,7 +7,7 @@ from scrapy.selector import Selector
 from six.moves.urllib.parse import urljoin
 from calaccess.loaders import (
     PropositionElectionLoader,
-    PropositionCommitteeLoader,
+    PropositionCommitteeLoader
 )
 
 
