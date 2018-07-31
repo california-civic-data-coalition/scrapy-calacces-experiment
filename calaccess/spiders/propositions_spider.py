@@ -46,6 +46,9 @@ class PropositionsSpider(BaseSpider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse_proposition(self, response):
+        """
+        Scrape all the committees from proposition detail pages.
+        """
         soup = BeautifulSoup(response.body, 'lxml')
 
         proposition_name = soup.find('span', id='measureName').text

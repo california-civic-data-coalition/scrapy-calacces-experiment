@@ -25,3 +25,5 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     'calaccess.pipelines.MultiCSVItemPipeline': 300,
 }
+
+HTTPCACHE_POLICY = "scrapy.extensions.httpcache.RFC2616Policy"
