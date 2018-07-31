@@ -20,13 +20,11 @@ class PropositionElectionItem(scrapy.Item):
     url = scrapy.Field()
 
 
-class PropositionItem(scrapy.Item):
-    name = scrapy.Field()
-    url = scrapy.Field()
-
-
 class PropositionCommitteeItem(scrapy.Item):
     id = scrapy.Field()
+    election_name = scrapy.Field()
+    proposition_name = scrapy.Field()
+    proposition_id = scrapy.Field()
     name = scrapy.Field()
     position = scrapy.Field()
     url = scrapy.Field()

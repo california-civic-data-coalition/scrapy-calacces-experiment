@@ -5,7 +5,10 @@ from . import BaseSpider
 from bs4 import BeautifulSoup
 from scrapy.selector import Selector
 from six.moves.urllib.parse import urljoin
-from calaccess.loaders import PropositionElectionLoader, PropositionCommitteeLoader
+from calaccess.loaders import (
+    PropositionElectionLoader,
+    PropositionCommitteeLoader,
+)
 
 
 class PropositionsSpider(BaseSpider):
@@ -22,14 +25,21 @@ class PropositionsSpider(BaseSpider):
         for table in table_list:
             item = PropositionElectionLoader(response=response)
             selector = Selector(text=table)
-            item.add_value('name', selector.xpath('//caption/span/text()').extract_first())
+            name = selector.xpath('//caption/span/text()').extract_first()
+            item.add_value('name', name)
             item.add_value('url', response.url)
             yield item.load_item()
 
             prop_urls = selector.xpath("//a[@href]/@href").extract()
             for url in prop_urls:
                 full_url = urljoin("http://cal-access.sos.ca.gov/Campaign/Measures/", url)
-                yield scrapy.Request(url=full_url, callback=self.parse_proposition)
+                yield scrapy.Request(
+                    url=full_url,
+                    callback=self.parse_proposition,
+                    meta={
+                        "election_name": name,
+                    }
+                )
 
         # # Recursively request any new links found on this page
         # for url in self.parse_links(response):
@@ -45,6 +55,9 @@ class PropositionsSpider(BaseSpider):
         # which contain the committees on each side of the measure
         for table in soup.findAll('table', cellpadding='4'):
             item = PropositionCommitteeLoader(response=response)
+            item.add_value("election_name", response.meta['election_name'])
+            item.add_value("proposition_name", proposition_name)
+            item.add_value("proposition_id", proposition_id)
 
             # Pull the data box
             data = table.findAll('span', {'class': 'txt7'})
