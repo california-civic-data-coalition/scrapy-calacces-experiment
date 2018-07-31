@@ -18,8 +18,7 @@ class PropositionsSpider(BaseSpider):
         for table in table_list:
             item = PropositionElectionLoader(response=response)
             selector = Selector(text=table)
-            name = selector.xpath('//caption/span/text()').extract_first()
-            item.add_value('name', name)
+            item.add_value('name', selector.xpath('//caption/span/text()').extract_first())
             item.add_value('url', response.url)
             yield item.load_item()
 
