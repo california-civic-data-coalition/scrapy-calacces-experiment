@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from scrapy.selector import Selector
 from six.moves.urllib.parse import urljoin
 from calaccess.loaders import (
+    PropositionLoader,
     PropositionElectionLoader,
     PropositionCommitteeLoader
 )
@@ -53,6 +54,12 @@ class PropositionsSpider(BaseSpider):
 
         proposition_name = soup.find('span', id='measureName').text
         proposition_id = re.match(r'.+id=(\d+)', response.url).group(1)
+
+        prop = PropositionLoader()
+        prop.add_value("id", proposition_id)
+        prop.add_value("name", proposition_name)
+        prop.add_value("url", response.url)
+        yield prop.load_item()
 
         # Loop through all the tables on the page
         # which contain the committees on each side of the measure
