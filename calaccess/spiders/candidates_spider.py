@@ -18,6 +18,7 @@ class CandidatesSpider(BaseSpider):
 
         # Find the link on the page with this id
         soup = BeautifulSoup(response.body, 'html.parser')
+
         links = soup.find_all('a', href=re.compile(r'^.*&electNav=\d+'))
         this_link = [l for l in links if 'electNav={}'.format(election_id) in l['href']][-1]
 
