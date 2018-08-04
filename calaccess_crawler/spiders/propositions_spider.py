@@ -5,7 +5,7 @@ from . import BaseSpider
 from bs4 import BeautifulSoup
 from scrapy.selector import Selector
 from six.moves.urllib.parse import urljoin
-from calaccess.loaders import (
+from calaccess_crawler.loaders import (
     PropositionLoader,
     PropositionElectionLoader,
     PropositionCommitteeLoader

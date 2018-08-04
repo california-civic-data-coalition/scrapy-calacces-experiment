@@ -4,7 +4,7 @@ import scrapy
 from . import BaseSpider
 from bs4 import BeautifulSoup
 from datetime import datetime
-from calaccess.loaders import IncumbentLoader, IncumbentElectionLoader
+from calaccess_crawler.loaders import IncumbentLoader, IncumbentElectionLoader
 
 
 class IncumbentsSpider(BaseSpider):

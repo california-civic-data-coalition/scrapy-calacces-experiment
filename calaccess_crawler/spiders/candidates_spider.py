@@ -3,7 +3,7 @@ import re
 import scrapy
 from . import BaseSpider
 from bs4 import BeautifulSoup
-from calaccess.loaders import CandidateLoader, CandidateElectionLoader
+from calaccess_crawler.loaders import CandidateLoader, CandidateElectionLoader
 
 
 class CandidatesSpider(BaseSpider):

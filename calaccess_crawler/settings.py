@@ -2,9 +2,9 @@
 import os
 BASE_DIR = os.path.dirname(__file__)
 
-BOT_NAME = 'calaccess'
-SPIDER_MODULES = ['calaccess.spiders']
-NEWSPIDER_MODULE = 'calaccess.spiders'
+BOT_NAME = 'calaccess_crawler'
+SPIDER_MODULES = ['calaccess_crawler.spiders']
+NEWSPIDER_MODULE = 'calaccess_crawler.spiders'
 
 ROBOTSTXT_OBEY = False
 DOWNLOAD_DELAY = 3
@@ -16,10 +16,10 @@ DOWNLOADER_MIDDLEWARES = {
     # 'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
     # 'scrapy_proxies.RandomProxy': 100,
     # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
-    # 'calaccess.middlewares.RotateUserAgentMiddleware': 120,
+    # 'calaccess_crawler.middlewares.RotateUserAgentMiddleware': 120,
 }
 ITEM_PIPELINES = {
-    'calaccess.pipelines.JsonPipeline': 300,
+    'calaccess_crawler.pipelines.JsonPipeline': 300,
 }
 
 # RETRY_TIMES = 10

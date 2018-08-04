@@ -1,4 +1,4 @@
-from calaccess import proxies
+from calaccess_crawler import proxies
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
