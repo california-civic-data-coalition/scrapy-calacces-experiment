@@ -35,6 +35,7 @@ class IncumbentElectionItem(scrapy.Item):
 class PropositionItem(scrapy.Item):
     id = scrapy.Field()
     name = scrapy.Field()
+    election_name = scrapy.Field()
     url = scrapy.Field()
 
 

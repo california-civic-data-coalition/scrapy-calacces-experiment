@@ -58,6 +58,7 @@ class PropositionsSpider(BaseSpider):
         prop = PropositionLoader()
         prop.add_value("id", proposition_id)
         prop.add_value("name", proposition_name)
+        prop.add_value("election_name", response.meta['election_name'])
         prop.add_value("url", response.url)
         yield prop.load_item()
 
