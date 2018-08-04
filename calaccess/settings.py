@@ -12,10 +12,7 @@ RANDOMIZE_DOWNLOAD_DELAY = True
 HTTPCACHE_POLICY = "scrapy.extensions.httpcache.RFC2616Policy"
 
 SPIDER_MIDDLEWARES = {}
-DOWNLOADER_MIDDLEWARES = {
-    'calaccess.useragent.RotateUserAgentMiddleware' :400,
-    'calaccess.middlewares.CalaccessDownloaderMiddleware': 543,
-}
+DOWNLOADER_MIDDLEWARES = {}
 ITEM_PIPELINES = {
     'calaccess.pipelines.JsonPipeline': 300,
 }
