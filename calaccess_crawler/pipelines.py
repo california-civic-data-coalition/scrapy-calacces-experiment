@@ -27,7 +27,7 @@ class JsonPipeline(object):
     def __init__(self):
         self.file_path = os.environ.get(
             'SCRAPY_ITEMS_PATH',
-            os.path.join(os.path.dirname(__file__), 'items.json'))
+            os.path.join(os.path.dirname(__file__), 'items.json')
         )
         self.file = open(self.file_path, 'w')
         self.exporter = ItemizedJsonLinesItemExporter(self.file, encoding='utf-8', ensure_ascii=False)
