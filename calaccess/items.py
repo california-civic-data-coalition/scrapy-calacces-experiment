@@ -16,6 +16,15 @@ class CandidateElectionItem(scrapy.Item):
     url = scrapy.Field()
 
 
+class IncumbentItem(scrapy.Item):
+    id = scrapy.Field()
+    session = scrapy.Field()
+    category = scrapy.Field()
+    office = scrapy.Field()
+    name = scrapy.Field()
+    url = scrapy.Field()
+
+
 class IncumbentElectionItem(scrapy.Item):
     session = scrapy.Field()
     name = scrapy.Field()

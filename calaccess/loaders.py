@@ -12,6 +12,10 @@ class CandidateElectionLoader(ItemLoader):
     default_item_class = items.CandidateElectionItem
 
 
+class IncumbentLoader(ItemLoader):
+    default_item_class = items.IncumbentItem
+
+
 class IncumbentElectionLoader(ItemLoader):
     default_item_class = items.IncumbentElectionItem
 

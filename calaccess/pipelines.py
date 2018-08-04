@@ -10,6 +10,7 @@ class PipelineMixin(object):
     item_list = [
         'candidate',
         'candidateelection',
+        'incumbent',
         'incumbentelection',
         'propositionelection',
         'propositioncommittee',
