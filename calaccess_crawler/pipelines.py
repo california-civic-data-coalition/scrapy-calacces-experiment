@@ -4,7 +4,6 @@ import calaccess_crawler
 from scrapy.exporters import CsvItemExporter
 
 
-
 class ItemCSVPipeline(object):
     """
     Exports each item's records as a separate CSV file.
@@ -17,8 +16,12 @@ class ItemCSVPipeline(object):
         self.item_list = calaccess_crawler.get_items()
 
         # Set the directory where the files will be saved.
-        # If the EXPORT_DIR setting has not been configured, save to the save folder as this file.
-        self.file_dir = os.environ.get('SCRAPY_EXPORT_DIR', os.path.dirname(__file__))
+        # If the SCRAPY_EXPORT_DIR envvar has not been configured
+        # save to the save folder as this file.
+        self.file_dir = os.environ.get(
+            'SCRAPY_EXPORT_DIR',
+            os.path.dirname(__file__)
+        )
 
         # Loop through the items and make a JSON file for each one of them.
         for item_klass in self.item_list:
