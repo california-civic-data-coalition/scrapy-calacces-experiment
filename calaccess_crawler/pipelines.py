@@ -29,13 +29,13 @@ class ItemCSVPipeline(object):
             file_path = os.path.join(self.file_dir, file_name)
 
             # Open the file for writing
-            file = open(file_path, 'wb')
+            file_obj = open(file_path, 'wb')
 
             # Add it to the file dictionary
-            self.file_dict[item_klass.__name__] = file
+            self.file_dict[item_klass.__name__] = file_obj
 
             # Convert the file into an exporter
-            exporter = CsvItemExporter(file)
+            exporter = CsvItemExporter(file_obj)
 
             # Add it to the file dictionary
             self.exporter_dict[item_klass.__name__] = exporter
