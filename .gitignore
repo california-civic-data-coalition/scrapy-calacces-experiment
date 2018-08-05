@@ -1,3 +1,4 @@
+*.csv
 *.pyc
 *.json
 proxy_list.txt

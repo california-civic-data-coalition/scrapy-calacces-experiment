@@ -1,57 +1,58 @@
 # -*- coding: utf-8 -*-
 import os
-from scrapy.utils.python import to_bytes
-from scrapy.exporters import JsonLinesItemExporter
+import calaccess_crawler
+from scrapy.exporters import CsvItemExporter
 
 
-class ItemizedJsonLinesItemExporter(JsonLinesItemExporter):
+
+class ItemCSVPipeline(object):
     """
-    Override of default JSON exporter that includes each item's class in the export.
-
-    Intended to make it easier to read the data into other Python applications.
+    Exports each item's records as a separate CSV file.
     """
-    def export_item(self, item, **kwargs):
-        # Do the typical thing.
-        d = dict(super(JsonLinesItemExporter, self)._get_serialized_fields(item, **kwargs))
+    file_dict = {}
+    exporter_dict = {}
 
-        # Add the item's class name to the dictionary. This is our customization.
-        d['type'] = type(item).__name__.replace('Item', '')
+    def __init__(self):
+        # Get a list of all the items in this project.
+        self.item_list = calaccess_crawler.get_items()
 
-        # Write it out per usual
-        data = self.encoder.encode(d) + '\n'
-        self.file.write(to_bytes(data, self.encoding))
-
-
-class JsonPipeline(object):
-    """
-    Exports each spider's items as JSON to a text file. One row per item.
-    """
-    def open_spider(self, spider):
-        # Set the export file name based on the spider's name
-        self.file_name = "{}.json".format(spider.name)
-
-        # Set the directory where the file will be saved.
+        # Set the directory where the files will be saved.
         # If the EXPORT_DIR setting has not been configured, save to the save folder as this file.
-        self.file_dir = spider.settings.get('EXPORT_DIR', os.path.dirname(__file__))
+        self.file_dir = os.environ.get('SCRAPY_EXPORT_DIR', os.path.dirname(__file__))
 
-        # Combine the name and the directory into a full path
-        self.file_path = os.path.join(self.file_dir, self.file_name)
+        # Loop through the items and make a JSON file for each one of them.
+        for item_klass in self.item_list:
+            # Set the export file name based on the item's name
+            file_name = "{}.csv".format(item_klass.__name__)
 
-        # Open the file
-        self.file = open(self.file_path, 'wb')
+            # Combine the name and the directory into a full path
+            file_path = os.path.join(self.file_dir, file_name)
 
-        # Configure the exporter
-        self.exporter = ItemizedJsonLinesItemExporter(self.file, encoding='utf-8', ensure_ascii=False)
+            # Open the file for writing
+            file = open(file_path, 'wb')
+
+            # Add it to the file dictionary
+            self.file_dict[item_klass.__name__] = file
+
+            # Convert the file into an exporter
+            exporter = CsvItemExporter(file)
+
+            # Add it to the file dictionary
+            self.exporter_dict[item_klass.__name__] = exporter
 
         # Start it up.
-        self.exporter.start_exporting()
+        [e.start_exporting() for e in self.exporter_dict.values()]
 
-    def close_spider(self, spider):
-        self.exporter.finish_exporting()
-        # Close the file on the way out.
-        self.file.close()
+    def spider_closed(self, spider):
+        # Close the exporters ...
+        [e.finish_exporting() for e in self.exporter_dict.values()]
+        # ... and the files.
+        [f.close() for f in self.file_dict.values()]
 
     def process_item(self, item, spider):
-        # Nothing too fancy here.
-        self.exporter.export_item(item)
+        # Look up the exporter for this item type
+        item_klass = type(item)
+        # Export it
+        self.exporter_dict[item_klass.__name__].export_item(item)
+        # Pass it through
         return item
