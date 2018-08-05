@@ -22,6 +22,8 @@ ITEM_PIPELINES = {
     'calaccess_crawler.pipelines.JsonPipeline': 300,
 }
 
+EXPORT_DIR = '/tmp/'
+
 # RETRY_TIMES = 10
 # RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
 # PROXY_MODE = 0

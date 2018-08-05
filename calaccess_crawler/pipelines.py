@@ -24,19 +24,32 @@ class JsonPipeline(object):
     """
     Export all the items to a big JSON file.
     """
-    def __init__(self):
-        self.file_path = os.environ.get(
-            'SCRAPY_ITEMS_PATH',
-            os.path.join(os.path.dirname(__file__), 'items.json')
-        )
-        self.file = open(self.file_path, 'w')
+    def open_spider(self, spider):
+        # Set the export file name based on the spider's name
+        self.file_name = "{}.json".format(spider.name)
+
+        # Set the directory where the file will be saved.
+        # If the EXPORT_DIR setting has not been configured, save to the save folder as this file.
+        self.file_dir = spider.settings.get('EXPORT_DIR', os.path.dirname(__file__))
+
+        # Combine the name and the directory into a full path
+        self.file_path = os.path.join(self.file_dir, self.file_name)
+
+        # Open the file
+        self.file = open(self.file_path, 'wb')
+
+        # Configure the exporter
         self.exporter = ItemizedJsonLinesItemExporter(self.file, encoding='utf-8', ensure_ascii=False)
+
+        # Start it up.
         self.exporter.start_exporting()
 
     def close_spider(self, spider):
         self.exporter.finish_exporting()
+        # Close the file on the way out.
         self.file.close()
 
     def process_item(self, item, spider):
+        # Nothing too fancy here.
         self.exporter.export_item(item)
         return item
