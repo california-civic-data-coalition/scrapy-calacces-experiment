@@ -6,7 +6,9 @@ from scrapy.exporters import JsonLinesItemExporter
 
 class ItemizedJsonLinesItemExporter(JsonLinesItemExporter):
     """
-    Override of default JSON exporter.
+    Override of default JSON exporter that includes each item's class in the export.
+
+    Intended to make it easier to read the data into other Python applications.
     """
     def export_item(self, item, **kwargs):
         # Do the typical thing.
@@ -22,7 +24,7 @@ class ItemizedJsonLinesItemExporter(JsonLinesItemExporter):
 
 class JsonPipeline(object):
     """
-    Export all the items to a big JSON file.
+    Exports each spider's items as JSON to a text file. One row per item.
     """
     def open_spider(self, spider):
         # Set the export file name based on the spider's name
