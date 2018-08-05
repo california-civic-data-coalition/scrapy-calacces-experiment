@@ -53,9 +53,9 @@ class ItemCSVPipeline(object):
         [f.close() for f in self.file_dict.values()]
 
     def process_item(self, item, spider):
-        # Look up the exporter for this item type
-        item_klass = type(item)
-        # Export it
-        self.exporter_dict[item_klass.__name__].export_item(item)
-        # Pass it through
+        # Look up the exporter for this item type.
+        exporter = self.exporter_dict[type(item).__name__]
+        # Export the item.
+        exporter.export_item(item)
+        # Pass it through.
         return item
