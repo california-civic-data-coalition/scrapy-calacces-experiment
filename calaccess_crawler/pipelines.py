@@ -17,7 +17,7 @@ class ItemCSVPipeline(object):
 
         # Set the directory where the files will be saved.
         # If the SCRAPY_EXPORT_DIR envvar has not been configured
-        # save to the save folder as this file.
+        # save to the same folder as this file.
         self.file_dir = os.environ.get(
             'SCRAPY_EXPORT_DIR',
             os.path.dirname(__file__)
