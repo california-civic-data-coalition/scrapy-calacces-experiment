@@ -1,4 +1,3 @@
 requests
 Scrapy==1.5.1
 bs4
-scrapy_proxies
