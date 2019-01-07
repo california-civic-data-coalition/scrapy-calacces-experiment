@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 "bs4" = "*"
-scrapy = "*"
+Scrapy = "*"
 
 [dev-packages]
 
